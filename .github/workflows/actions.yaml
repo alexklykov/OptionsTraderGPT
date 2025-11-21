@@ -2,7 +2,6 @@ name: Scheduled Test
 
 on:
   schedule:
-    # Run every day at 2:30 AM UTC
     - cron: '*/5 * * * *'
   workflow_dispatch:  # Optional: allows manual runs
 
@@ -10,6 +9,8 @@ jobs:
   uv-example:
     name: python
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v5
@@ -24,3 +25,11 @@ jobs:
 
       - name: Run script
         run: uv run python main.py
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add mu_prices.csv mu_prices_plot.png
+          git commit -m "Update stock prices" || exit 0
+          git push

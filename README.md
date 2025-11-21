@@ -1,4 +1,4 @@
 # OptionsTraderGPT
 LLM Trading Bot that trades options.
 
-#Test
+# Test
